@@ -5,7 +5,7 @@ library(jsonlite)
 # stops character classes from being turned into factors. Mutes warnings, loads library jsonlite
 
 if ("fractal_data.csv" %in% list.files() == FALSE) {
-    frame <- data.frame(levelNumber=as.character(), levelName=as.character(), Date=as.character())
+    frame <- data.frame(levelNumber=as.integer(), levelName=as.character(), Date=as.character())
     write.csv(frame, "fractal_data.csv", row.names=FALSE)
 }
 # if there is no output .csv file in wd, (aka first time script is run) create an empty csv
@@ -34,7 +34,7 @@ dayNames <- fromJSON(site)
 # uses the extracted ids to reference against the api, to extract the names of the achievements
 
 levelNumber <- dayNames$name
-levelNumber <- gsub("[^0-9]", "", levelNumber)
+levelNumber <- as.integer(gsub("[^0-9]", "", levelNumber))
 levelNumber <- levelNumber[order(levelNumber)]
 # formats the name of the achievs to extract only the number
 
